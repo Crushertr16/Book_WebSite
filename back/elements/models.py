@@ -8,20 +8,9 @@
 from django.db import models
 
 
-class Admin(models.Model):
-    adminid = models.AutoField(db_column='adminID', primary_key=True)  # Field name made lowercase.
-    adminad = models.TextField(db_column='adminAd')  # Field name made lowercase.
-    admineposta = models.TextField(db_column='adminEposta', unique=True)  # Field name made lowercase.
-    adminsifre = models.TextField(db_column='adminSifre')  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'ADMIN'
-
-
 class Favoriler(models.Model):
     favoriid = models.AutoField(db_column='favoriID', primary_key=True)  # Field name made lowercase.
-    kullaniciid_fav = models.ForeignKey('Kullanici', models.DO_NOTHING, db_column='kullaniciID_fav')  # Field name made lowercase.
+    kullaniciid_fav = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='kullaniciID_fav')  # Field name made lowercase.
     kitapid_fav = models.ForeignKey('Kitap', models.DO_NOTHING, db_column='kitapID_fav')  # Field name made lowercase.
 
     class Meta:
@@ -31,7 +20,7 @@ class Favoriler(models.Model):
 
 class Inceleme(models.Model):
     incelemeid = models.AutoField(db_column='incelemeID', primary_key=True)  # Field name made lowercase.
-    kullaniciid_inceleme = models.ForeignKey('Kullanici', models.DO_NOTHING, db_column='kullaniciID_inceleme')  # Field name made lowercase.
+    kullaniciid_inceleme = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='kullaniciID_inceleme')  # Field name made lowercase.
     kitapid_inceleme = models.ForeignKey('Kitap', models.DO_NOTHING, db_column='kitapID_inceleme')  # Field name made lowercase.
     yazarid_inceleme = models.ForeignKey('Yazarlar', models.DO_NOTHING, db_column='yazarID_inceleme')  # Field name made lowercase.
     puan = models.IntegerField(blank=True, null=True)
@@ -54,7 +43,7 @@ class Kitap(models.Model):
     kitapid = models.AutoField(db_column='kitapID', primary_key=True)  # Field name made lowercase.
     kitapad = models.TextField(db_column='kitapAd')  # Field name made lowercase.
     yazarid_kitap = models.ForeignKey('Yazarlar', models.DO_NOTHING, db_column='yazarID_kitap')  # Field name made lowercase.
-    yayintarihi =models.DateField(auto_now=False, auto_now_add=False,db_column='yayinTarihi')  # Field name made lowercase.
+    yayintarihi = models.TextField(db_column='yayinTarihi')  # Field name made lowercase.
     sayfasayisi = models.IntegerField(db_column='sayfaSayisi')  # Field name made lowercase.
     dil = models.TextField()
     ozet = models.TextField()
@@ -65,23 +54,10 @@ class Kitap(models.Model):
         db_table = 'KITAP'
 
 
-class Kullanici(models.Model):
-    kullaniciid = models.AutoField(db_column='kullaniciID', primary_key=True)  # Field name made lowercase.
-    kullaniciadi = models.TextField(db_column='kullaniciAdi')  # Field name made lowercase.
-    kullanicieposta = models.TextField(db_column='kullaniciEposta', unique=True)  # Field name made lowercase.
-    kullanicisifre = models.TextField(db_column='kullaniciSifre')  # Field name made lowercase.
-    okunacaklarlistesiid_kullanici = models.ForeignKey('Okunacaklarlistesi', models.DO_NOTHING, db_column='okunacaklarListesiID_kullanici')  # Field name made lowercase.
-    okunanlarlistesiid_kullanici = models.ForeignKey('Okunanlarlistesi', models.DO_NOTHING, db_column='okunanlarListesiID_kullanici')  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'KULLANICI'
-
-
 class Okunacaklarlistesi(models.Model):
     okunacaklarlistesiid = models.AutoField(db_column='okunacaklarListesiID', primary_key=True)  # Field name made lowercase.
     kitapid_okunacaklar = models.ForeignKey(Kitap, models.DO_NOTHING, db_column='kitapID_okunacaklar')  # Field name made lowercase.
-    kullaniciid_okunacaklar = models.ForeignKey(Kullanici, models.DO_NOTHING, db_column='kullaniciID_okunacaklar')  # Field name made lowercase.
+    kullaniciid_okunacaklar = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='kullaniciID_okunacaklar')  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -91,7 +67,7 @@ class Okunacaklarlistesi(models.Model):
 class Okunanlarlistesi(models.Model):
     okunanlarlistesiid = models.AutoField(db_column='okunanlarListesiID', primary_key=True)  # Field name made lowercase.
     kitapid_okunanlar = models.ForeignKey(Kitap, models.DO_NOTHING, db_column='kitapID_okunanlar')  # Field name made lowercase.
-    kullaniciid_okunanlar = models.ForeignKey(Kullanici, models.DO_NOTHING, db_column='kullaniciID_okunanlar')  # Field name made lowercase.
+    kullaniciid_okunanlar = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='kullaniciID_okunanlar')  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -151,6 +127,8 @@ class AuthUser(models.Model):
     is_active = models.BooleanField()
     date_joined = models.DateTimeField()
     first_name = models.CharField(max_length=150)
+    okunacaklarid_user = models.ForeignKey(Okunacaklarlistesi, models.DO_NOTHING, db_column='okunacaklarID_user', blank=True, null=True)  # Field name made lowercase.
+    okunanlarid_user = models.IntegerField(db_column='okunanlarID_user', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False

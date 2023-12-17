@@ -1,10 +1,6 @@
 from django.contrib import admin
 from .models import *
 
-@admin.register(Admin)
-class AdminAdmin(admin.ModelAdmin):
-    list_display = ('adminid', 'adminad', 'admineposta', 'adminsifre')
-
 @admin.register(Favoriler)
 class FavorilerAdmin(admin.ModelAdmin):
     list_display = ('favoriid', 'kullaniciid_fav', 'kitapid_fav')
@@ -19,11 +15,7 @@ class KategoriAdmin(admin.ModelAdmin):
 
 @admin.register(Kitap)
 class KitapAdmin(admin.ModelAdmin):
-    list_display = ('kitapid','kitapad','yazarid_kitap','yayintarihi')
-
-@admin.register(Kullanici)
-class KullaniciAdmin(admin.ModelAdmin):
-    list_display = ('kullaniciid', 'kullaniciadi', 'kullanicieposta', 'kullanicisifre', 'okunacaklarlistesiid_kullanici', 'okunanlarlistesiid_kullanici')
+    list_display = ('kitapid','kitapad','yazarid_kitap','yayintarihi','dil','ozet','kategoriid_kitap','sayfasayisi')
 
 @admin.register(Okunacaklarlistesi)
 class OkunacaklarlistesiAdmin(admin.ModelAdmin):
@@ -36,4 +28,5 @@ class OkunanlarlistesiAdmin(admin.ModelAdmin):
 @admin.register(Yazarlar)
 class YazarlarAdmin(admin.ModelAdmin):
     list_display = ('yazarid', 'yazaradi', 'yazardogumtarihi', 'yazarbiyografi', 'yazarfoto', 'oduller')
+
 
