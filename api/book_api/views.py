@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.http import JsonResponse
 from book_api.serializer import KitapSerializer
 from .models import Kitap
 from django.contrib.auth.models import User
