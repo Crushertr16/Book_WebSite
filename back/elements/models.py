@@ -9,9 +9,12 @@ from django.db import models
 
 
 class Favoriler(models.Model):
-    favoriid = models.AutoField(db_column='favoriID', primary_key=True)  # Field name made lowercase.
-    kullaniciid_fav = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='kullaniciID_fav')  # Field name made lowercase.
-    kitapid_fav = models.ForeignKey('Kitap', models.DO_NOTHING, db_column='kitapID_fav')  # Field name made lowercase.
+    favoriid = models.AutoField(db_column='favoriID', primary_key=True)  
+    kullaniciid_fav = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='kullaniciID_fav')  
+    kitapid_fav = models.ForeignKey('Kitap', models.DO_NOTHING, db_column='kitapID_fav')  
+
+    def __str__(self):
+        return f"{self.favoriid}"
 
     class Meta:
         managed = False
@@ -19,45 +22,59 @@ class Favoriler(models.Model):
 
 
 class Inceleme(models.Model):
-    incelemeid = models.AutoField(db_column='incelemeID', primary_key=True)  # Field name made lowercase.
-    kullaniciid_inceleme = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='kullaniciID_inceleme')  # Field name made lowercase.
-    kitapid_inceleme = models.ForeignKey('Kitap', models.DO_NOTHING, db_column='kitapID_inceleme')  # Field name made lowercase.
-    yazarid_inceleme = models.ForeignKey('Yazarlar', models.DO_NOTHING, db_column='yazarID_inceleme')  # Field name made lowercase.
+    incelemeid = models.AutoField(db_column='incelemeID', primary_key=True)  
+    kullaniciid_inceleme = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='kullaniciID_inceleme')  
+    kitapid_inceleme = models.ForeignKey('Kitap', models.DO_NOTHING, db_column='kitapID_inceleme')  
+    yazarid_inceleme = models.ForeignKey('Yazarlar', models.DO_NOTHING, db_column='yazarID_inceleme')  
     puan = models.IntegerField(blank=True, null=True)
 
+    def __str__(self):
+        return f"{self.incelemeid}"
+    
     class Meta:
         managed = False
         db_table = 'INCELEME'
 
 
 class Kategori(models.Model):
-    kategoriid = models.AutoField(db_column='kategoriID', primary_key=True)  # Field name made lowercase.
+    kategoriid = models.AutoField(db_column='kategoriID', primary_key=True)  
     kategori = models.TextField(unique=True)
 
+    def __str__(self):
+        return f"{self.kategoriid}"
+    
     class Meta:
         managed = False
         db_table = 'KATEGORI'
 
 
 class Kitap(models.Model):
-    kitapid = models.AutoField(db_column='kitapID', primary_key=True)  # Field name made lowercase.
-    kitapad = models.TextField(db_column='kitapAd')  # Field name made lowercase.
-    yazarid_kitap = models.ForeignKey('Yazarlar', models.DO_NOTHING, db_column='yazarID_kitap')  # Field name made lowercase.
-    yayintarihi = models.TextField(db_column='yayinTarihi')  # Field name made lowercase.
-    sayfasayisi = models.IntegerField(db_column='sayfaSayisi')  # Field name made lowercase.
+    kitapid = models.AutoField(db_column='kitapID', primary_key=True)  
+    kitapad = models.TextField(db_column='kitapAd')  
+    yazarid_kitap = models.ForeignKey('Yazarlar', models.DO_NOTHING, db_column='yazarID_kitap')  
+    yayintarihi = models.TextField(db_column='yayinTarihi')  
+    sayfasayisi = models.IntegerField(db_column='sayfaSayisi')  
     dil = models.TextField()
     ozet = models.TextField()
-    kategoriid_kitap = models.ForeignKey(Kategori, models.DO_NOTHING, db_column='kategoriID_kitap')  # Field name made lowercase.
+    kategoriid_kitap = models.ForeignKey(Kategori, models.DO_NOTHING, db_column='kategoriID_kitap')  
 
+
+    def __str__(self):
+        return f"{self.kitapid}"
+    
     class Meta:
         managed = False
         db_table = 'KITAP'
 
 
 class Okunacaklarlistesi(models.Model):
-    okunacaklarlistesiid = models.AutoField(db_column='okunacaklarListesiID', primary_key=True)  # Field name made lowercase.
-    kitapid_okunacaklar = models.ForeignKey(Kitap, models.DO_NOTHING, db_column='kitapID_okunacaklar')  # Field name made lowercase.
-    kullaniciid_okunacaklar = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='kullaniciID_okunacaklar')  # Field name made lowercase.
+    okunacaklarlistesiid = models.AutoField(db_column='okunacaklarListesiID', primary_key=True)  
+    kitapid_okunacaklar = models.ForeignKey(Kitap, models.DO_NOTHING, db_column='kitapID_okunacaklar')  
+    kullaniciid_okunacaklar = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='kullaniciID_okunacaklar')  
+
+    def __str__(self):
+        return f"{self.okunacaklarlistesiid}"
+    
 
     class Meta:
         managed = False
@@ -65,9 +82,14 @@ class Okunacaklarlistesi(models.Model):
 
 
 class Okunanlarlistesi(models.Model):
-    okunanlarlistesiid = models.AutoField(db_column='okunanlarListesiID', primary_key=True)  # Field name made lowercase.
-    kitapid_okunanlar = models.ForeignKey(Kitap, models.DO_NOTHING, db_column='kitapID_okunanlar')  # Field name made lowercase.
-    kullaniciid_okunanlar = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='kullaniciID_okunanlar')  # Field name made lowercase.
+    okunanlarlistesiid = models.AutoField(db_column='okunanlarListesiID', primary_key=True)  
+    kitapid_okunanlar = models.ForeignKey(Kitap, models.DO_NOTHING, db_column='kitapID_okunanlar')  
+    kullaniciid_okunanlar = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='kullaniciID_okunanlar')  
+
+
+    def __str__(self):
+        return f"{self.okunanlarlistesiid}"
+    
 
     class Meta:
         managed = False
@@ -75,12 +97,15 @@ class Okunanlarlistesi(models.Model):
 
 
 class Yazarlar(models.Model):
-    yazarid = models.AutoField(db_column='yazarID', primary_key=True)  # Field name made lowercase.
-    yazaradi = models.TextField(db_column='yazarAdi')  # Field name made lowercase.
-    yazardogumtarihi = models.TextField(db_column='yazarDogumTarihi')  # Field name made lowercase.
-    yazarbiyografi = models.TextField(db_column='yazarBiyografi')  # Field name made lowercase.
-    yazarfoto = models.TextField(db_column='yazarFoto')  # Field name made lowercase.
+    yazarid = models.AutoField(db_column='yazarID', primary_key=True)  
+    yazaradi = models.TextField(db_column='yazarAdi')  
+    yazardogumtarihi = models.TextField(db_column='yazarDogumTarihi')  
+    yazarbiyografi = models.TextField(db_column='yazarBiyografi')  
+    yazarfoto = models.TextField(db_column='yazarFoto')  
     oduller = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.yazarid}"
 
     class Meta:
         managed = False
@@ -127,8 +152,8 @@ class AuthUser(models.Model):
     is_active = models.BooleanField()
     date_joined = models.DateTimeField()
     first_name = models.CharField(max_length=150)
-    okunacaklarid_user = models.ForeignKey(Okunacaklarlistesi, models.DO_NOTHING, db_column='okunacaklarID_user', blank=True, null=True)  # Field name made lowercase.
-    okunanlarid_user = models.IntegerField(db_column='okunanlarID_user', blank=True, null=True)  # Field name made lowercase.
+    okunacaklarid_user = models.ForeignKey(Okunacaklarlistesi, models.DO_NOTHING, db_column='okunacaklarID_user', blank=True, null=True)  
+    okunanlarid_user = models.IntegerField(db_column='okunanlarID_user', blank=True, null=True)  
 
     class Meta:
         managed = False

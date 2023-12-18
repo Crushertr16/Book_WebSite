@@ -37,7 +37,7 @@ class UserSerializer(serializers.ModelSerializer):
         user = User(**validated_data)
         
         if password2 and user.password != password2:
-            raise serializers.ValidationError({"password": "Passwords do not match."})
+            raise serializers.ValidationError({"password": "Şifre uyuşmuyor."})
 
         user.set_password(validated_data['password'])
         user.save()

@@ -3,7 +3,7 @@ from .models import *
 
 @admin.register(Favoriler)
 class FavorilerAdmin(admin.ModelAdmin):
-    list_display = ('favoriid', 'kullaniciid_fav', 'kitapid_fav')
+    list_display = ('favoriid', 'kitapid_fav')
 
 @admin.register(Inceleme)
 class IncelemeAdmin(admin.ModelAdmin):
