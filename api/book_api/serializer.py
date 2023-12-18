@@ -11,6 +11,8 @@ class KitapSerializer(serializers.Serializer):
     yazarid_kitap=serializers.IntegerField()
     kategoriid_kitap=serializers.IntegerField()
     
+
+
     def create(self, validated_data):
         return Kitap.objects.create(**validated_data)
     def update(self, instance, validated_data):

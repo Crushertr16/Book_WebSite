@@ -41,6 +41,10 @@ def book(request, id):
     elif request.method=='DELETE':
         book.delete()
         return Response({'delete':True})
+    
+
+
+
 @api_view(['POST'])
 def register(request):
     if request.method == 'POST':
@@ -51,14 +55,14 @@ def register(request):
 
         if password == password2:
             if User.objects.filter(email=email).exists():
-                return Response({'error': 'Email Already Used'}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'error': 'Email zaten var.'}, status=status.HTTP_400_BAD_REQUEST)
             elif User.objects.filter(username=username).exists():
-                return Response({'error': 'Username Already in Use'}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'error': 'Kullanıcı adı zaten var.'}, status=status.HTTP_400_BAD_REQUEST)
             else:
                 user = User.objects.create_user(username=username, email=email, password=password)
                 user.save()
-                return Response({'message': 'User registered successfully'}, status=status.HTTP_201_CREATED)
+                return Response({'message': 'Kullanıcı başarıyla eklendi.'}, status=status.HTTP_201_CREATED)
         else:
-            return Response({'error': 'Password Not The Same'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Şifre aynı değil.'}, status=status.HTTP_400_BAD_REQUEST)
     else:
         return Response({'error': 'Invalid request method'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
