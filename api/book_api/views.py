@@ -1,4 +1,4 @@
-from django.shortcuts import render
+"""from django.shortcuts import render
 from book_api.serializer import KitapSerializer
 from .models import Kitap
 from django.contrib.auth.models import User
@@ -66,3 +66,4 @@ def register(request):
             return Response({'error': 'Şifre aynı değil.'}, status=status.HTTP_400_BAD_REQUEST)
     else:
         return Response({'error': 'Invalid request method'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+"""
